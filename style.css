@@ -1,0 +1,28 @@
+body {
+    background-color: #FAD02E;
+}
+.card-header {
+    background-color: #359447;
+    color: aliceblue;
+    
+}
+.card-body {
+    background-color: rgb(241, 241, 241);
+    font-size: 16px;
+}
+#foot {
+    background-color: rgb(241, 241, 241);
+}
+
+#secLogo {
+    font-size: 80px;
+    font-family: "Fleur De Leah", cursive;
+    font-weight: 400;
+    font-style: normal;
+    margin-bottom: 12px;
+    padding: 0px;
+}
+
+.blockquote {
+    font-size: 16px;
+}
