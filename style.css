@@ -1,10 +1,10 @@
 body {
     background-color: #FAD02E;
+    padding: none;
 }
 .card-header {
     background-color: #359447;
     color: aliceblue;
-    
 }
 .card-body {
     background-color: rgb(241, 241, 241);
@@ -16,13 +16,10 @@ body {
 
 #secLogo {
     font-size: 80px;
-    font-family: "Fleur De Leah", cursive;
-    font-weight: 400;
-    font-style: normal;
-    margin-bottom: 12px;
-    padding: 0px;
 }
 
 .blockquote {
     font-size: 16px;
 }
+
+/* Compass styling */
