@@ -64,9 +64,8 @@
 
     <!--JUMBO-->
     <div data-aos="fade-up" class="bg-light p-5  m-3 text-bg-light">
-      <h1 class="display-4">Hello, world!</h1>
-      <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention
-        to featured content or information.</p>
+      <h1 class="display-4">Hello, all!</h1>
+      <p class="lead">Let's get your shots dialed with this</p>
       <hr class="my-4">
       <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
       <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
@@ -95,7 +94,7 @@
       </div>
     </div>
 
-    <!--cal-->
+    <!--Cal-->
     <div class="container py-5">
       <div data-aos="fade-up" class="card text-center mx-auto" style="max-width: 400px;">
         <div class="card-header">
@@ -139,20 +138,28 @@
             <input type="number" id="windAngle" class="form-control" min="0" max="360" placeholder="0 to 360°" />
           </p>
 
-<div class="text-center my-3">
-  <div id="compass" style="position: relative; width: 200px; height: 200px; margin: auto; border: 2px solid #333; border-radius: 50%;">
-    <!-- Needle -->
-    <div id="compass-needle" style="position: absolute; top: 50%; left: 50%; width: 2px; height: 90px; background: red; transform-origin: bottom center; transform: rotate(0deg);"></div>
+          <div class="text-center my-3">
+            <div id="compass"
+              style="position: relative; width: 200px; height: 200px; margin: auto; border: 2px solid #333; border-radius: 50%;">
+              <!-- Needle -->
+              <div id="compass-needle"
+                style="position: absolute; top: 50%; left: 50%; width: 4px; height: 90px; background: red; transform-origin: bottom center; transform: translate(-50%, -100%) rotate(0deg);">
+              </div>
 
-    <!-- Center Dot -->
-    <div style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: black; border-radius: 50%; transform: translate(-50%, -50%);"></div>
+              <!-- Center Dot -->
+              <div
+                style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: black; border-radius: 50%; transform: translate(-50%, -50%);">
+              </div>
 
-    <!-- Dynamic Degree Labels (JS) -->
-    
-    <!-- Angle Display Below -->
-    <div id="compass-angle" style="position: absolute; width: 100%; text-align: center; top: 100%; margin-top: 5px;">0°</div>
-  </div>
-</div>
+              <!-- Dynamic Degree Labels (JS) -->
+              <div id="compass" class="glow"
+                style="position: relative; width: 200px; height: 200px; margin: auto; border: 2px solid #333; border-radius: 50%;">
+              </div>
+              <!-- Angle Display Below -->
+              <div id="compass-angle"
+                style="position: absolute; width: 100%; text-align: center; top: 100%; margin-top: 5px;">0°</div>
+            </div>
+          </div>
 
           <p class="card-text">
             <label for="elevation">Elevation Change (feet):</label>
@@ -163,6 +170,16 @@
           <button class="btn btn-primary mt-3" onclick="calculateShot()">Calculate Adjusted Shot</button>
 
           <div id="result" class="mt-3"></div>
+
+          <!--saved shot
+<div class="my-4">
+<h5>Saved Shots</h5>
+<div class="input-group mb-2">
+<input type="text" id="saveName" class="form-control" placeholder="Name this shot...">
+<button class="btn btn-primary" onclick="saveShot()">Save Shot</button>
+</div>
+<ul id="savedShots" class="list-group"></ul>
+</div>-->
         </div>
       </div>
     </div>
@@ -495,12 +512,13 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
     crossorigin="anonymous"></script>
+
   <!--AOD SCRIPT-->
   <script>
     AOS.init();
   </script>
 
-  <!--cal-->
+  <!--Cal-->
   <script src="myscripts.js"></script>
 
 </body>

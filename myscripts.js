@@ -32,8 +32,8 @@ function calculateShot() {
     '9iron': 0.8,
     pw: 0.7,
     gw: 0.5,
-    sw: 0.0,
-    lw: 0.0
+    sw: 0.3,
+    lw: 0.2
   };
 
   const clubEffect = clubWindEffect[club] || 1.0;
@@ -68,8 +68,7 @@ function calculateShot() {
 
 function updateCompass(angle) {
   const compassNeedle = document.getElementById('compass-needle');
-  const compassLabel = document.getElementById('compass-angle');
-  compassNeedle.style.transform = `rotate(${angle}deg)`;
+  const compassLabel = document.getElementById('compass-needle').style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
   compassLabel.innerText = `${angle.toFixed(0)}°`;
 }
 
@@ -96,3 +95,62 @@ document.addEventListener('DOMContentLoaded', () => {
     compass.appendChild(label);
   }
 });
+
+//Compass glowing effect
+function pulseCompassGlow() {
+  const compass = document.getElementById('compass');
+  compass.classList.remove('glow'); // reset
+  void compass.offsetWidth; // force reflow
+  compass.classList.add('glow'); // re-apply
+}
+
+//Saved Shots
+let savedShots = JSON.parse(localStorage.getItem("savedShots")) || [];
+
+function saveShot() {
+  const name = document.getElementById("saveName").value.trim();
+  if (!name) return alert("Please enter a name for this shot.");
+
+  const shot = {
+    name,
+    club: document.getElementById("club").value,
+    distance: parseFloat(document.getElementById("distance").value),
+    windSpeed: parseFloat(document.getElementById("windSpeed").value),
+    windDirection: parseFloat(document.getElementById("windDirection").value),
+    elevation: parseFloat(document.getElementById("elevation").value)
+  };
+
+  savedShots.push(shot);
+  localStorage.setItem("savedShots", JSON.stringify(savedShots));
+  displaySavedShots();
+  document.getElementById("saveName").value = "";
+}
+
+function loadShot(index) {
+  const shot = savedShots[index];
+  document.getElementById("club").value = shot.club;
+  document.getElementById("distance").value = shot.distance;
+  document.getElementById("windSpeed").value = shot.windSpeed;
+  document.getElementById("windDirection").value = shot.windDirection;
+  document.getElementById("elevation").value = shot.elevation;
+
+  updateShot(); // Optional: trigger calculation after loading
+}
+
+function displaySavedShots() {
+  const list = document.getElementById("savedShots");
+  list.innerHTML = "";
+
+  savedShots.forEach((shot, index) => {
+    const item = document.createElement("li");
+    item.className = "list-group-item d-flex justify-content-between align-items-center";
+    item.innerHTML = `
+      <span>${shot.name}</span>
+      <button class="btn btn-sm btn-outline-secondary" onclick="loadShot(${index})">Load</button>
+    `;
+    list.appendChild(item);
+  });
+}
+
+// Call this once on page load to show saved shots
+displaySavedShots();

@@ -23,3 +23,7 @@ body {
 }
 
 /* Compass styling */
+#compass.glow {
+  box-shadow: 0 0 15px 5px rgba(138, 43, 226, 0.5); /* Purple glow */
+  transition: box-shadow 0.5s ease-in-out;
+}
