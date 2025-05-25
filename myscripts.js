@@ -5,7 +5,7 @@ function calculateShot() {
   const elevation = parseFloat(document.getElementById('elevation').value);
   const club = document.getElementById('club').value;
   const resultOutput = document.getElementById('result');
-
+  
   if (
     isNaN(distance) ||
     isNaN(windSpeed) ||
@@ -62,8 +62,7 @@ function calculateShot() {
     <strong>Aim Adjustment:</strong> ${aimText}<br/>
     <em>(Wind angle: ${windAngle}°, Wind speed: ${windSpeed} mph, Club: ${club.toUpperCase()}, Effect: ${clubEffect})</em>
   `;
-
-  updateCompass(windAngle);
+  animateShot(adjustedDistance);
 }
 
 function updateCompass(angle) {
@@ -96,61 +95,57 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-//Compass glowing effect
-function pulseCompassGlow() {
-  const compass = document.getElementById('compass');
-  compass.classList.remove('glow'); // reset
-  void compass.offsetWidth; // force reflow
-  compass.classList.add('glow'); // re-apply
+
+const backToTopBtn = document.getElementById("backToTopBtn");
+
+window.addEventListener("scroll", () => {
+  backToTopBtn.style.display =
+    window.scrollY > 200 ? "block" : "none";
+});
+
+backToTopBtn.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+
+//handi
+const scoreInputs = document.getElementById('scoreInputs');
+
+// Generate 10 score inputs
+for (let i = 1; i <= 10; i++) {
+  const col = document.createElement('div');
+  col.className = "col-md-6 mb-3";
+  col.innerHTML = `
+    <label for="score${i}" class="form-label">Score ${i}</label>
+    <input type="number" class="form-control" id="score${i}" placeholder="Enter score ${i}">
+  `;
+  scoreInputs.appendChild(col);
 }
 
-//Saved Shots
-let savedShots = JSON.parse(localStorage.getItem("savedShots")) || [];
+// Handle form submission
+document.getElementById('handicapForm').addEventListener('submit', function (e) {
+  e.preventDefault();
 
-function saveShot() {
-  const name = document.getElementById("saveName").value.trim();
-  if (!name) return alert("Please enter a name for this shot.");
+  let scores = [];
+  for (let i = 1; i <= 10; i++) {
+    const val = parseFloat(document.getElementById(`score${i}`).value);
+    if (!isNaN(val)) scores.push(val);
+  }
 
-  const shot = {
-    name,
-    club: document.getElementById("club").value,
-    distance: parseFloat(document.getElementById("distance").value),
-    windSpeed: parseFloat(document.getElementById("windSpeed").value),
-    windDirection: parseFloat(document.getElementById("windDirection").value),
-    elevation: parseFloat(document.getElementById("elevation").value)
-  };
-
-  savedShots.push(shot);
-  localStorage.setItem("savedShots", JSON.stringify(savedShots));
-  displaySavedShots();
-  document.getElementById("saveName").value = "";
-}
-
-function loadShot(index) {
-  const shot = savedShots[index];
-  document.getElementById("club").value = shot.club;
-  document.getElementById("distance").value = shot.distance;
-  document.getElementById("windSpeed").value = shot.windSpeed;
-  document.getElementById("windDirection").value = shot.windDirection;
-  document.getElementById("elevation").value = shot.elevation;
-
-  updateShot(); // Optional: trigger calculation after loading
-}
-
-function displaySavedShots() {
-  const list = document.getElementById("savedShots");
-  list.innerHTML = "";
-
-  savedShots.forEach((shot, index) => {
-    const item = document.createElement("li");
-    item.className = "list-group-item d-flex justify-content-between align-items-center";
-    item.innerHTML = `
-      <span>${shot.name}</span>
-      <button class="btn btn-sm btn-outline-secondary" onclick="loadShot(${index})">Load</button>
+  if (scores.length < 3) {
+    document.getElementById('handicapResult').innerHTML = `
+      <div class="alert alert-warning">Please enter at least 3 valid scores.</div>
     `;
-    list.appendChild(item);
-  });
-}
+    return;
+  }
 
-// Call this once on page load to show saved shots
-displaySavedShots();
+  // Sort scores and calculate average of the 3 lowest
+  scores.sort((a, b) => a - b);
+  const bestThree = scores.slice(0, 3);
+  const avg = bestThree.reduce((sum, score) => sum + score, 0) / 3;
+  const handicap = (avg - 72).toFixed(1); // Assuming par 72
+
+  document.getElementById('handicapResult').innerHTML = `
+    <div class="alert alert-success">Estimated Handicap: ${handicap}</div>
+  `;
+});
