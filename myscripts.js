@@ -5,7 +5,7 @@ function calculateShot() {
   const elevation = parseFloat(document.getElementById('elevation').value);
   const club = document.getElementById('club').value;
   const resultOutput = document.getElementById('result');
-  
+
   if (
     isNaN(distance) ||
     isNaN(windSpeed) ||
@@ -62,7 +62,8 @@ function calculateShot() {
     <strong>Aim Adjustment:</strong> ${aimText}<br/>
     <em>(Wind angle: ${windAngle}°, Wind speed: ${windSpeed} mph, Club: ${club.toUpperCase()}, Effect: ${clubEffect})</em>
   `;
-  animateShot(adjustedDistance);
+
+  updateCompass(windAngle);
 }
 
 function updateCompass(angle) {
@@ -78,17 +79,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const label = document.createElement('div');
     label.innerText = `${angle}°`;
 
-    const radius = 90; // Adjust based on compass size (half of container size - padding)
+    const radius = 125; // Adjust based on compass size (half of container size - padding)
     const radians = (angle - 90) * (Math.PI / 180); // Start from top (0°)
 
-    const x = 100 + radius * Math.cos(radians); // center is 100px
-    const y = 100 + radius * Math.sin(radians);
+    const x = 105 + radius * Math.cos(radians); // center is 100px
+    const y = 105 + radius * Math.sin(radians);
 
     label.style.position = 'absolute';
     label.style.left = `${x}px`;
     label.style.top = `${y}px`;
     label.style.transform = 'translate(-50%, -50%)';
-    label.style.fontSize = '10px';
+    label.style.fontSize = '14px';
     label.style.pointerEvents = 'none';
 
     compass.appendChild(label);
@@ -96,6 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+//back to top Btn
 const backToTopBtn = document.getElementById("backToTopBtn");
 
 window.addEventListener("scroll", () => {
@@ -108,44 +110,45 @@ backToTopBtn.addEventListener("click", () => {
 });
 
 
-//handi
-const scoreInputs = document.getElementById('scoreInputs');
+//Handi
+ const scoreInputs = document.getElementById('scoreInputs');
 
-// Generate 10 score inputs
-for (let i = 1; i <= 10; i++) {
-  const col = document.createElement('div');
-  col.className = "col-md-6 mb-3";
-  col.innerHTML = `
-    <label for="score${i}" class="form-label">Score ${i}</label>
-    <input type="number" class="form-control" id="score${i}" placeholder="Enter score ${i}">
-  `;
-  scoreInputs.appendChild(col);
-}
-
-// Handle form submission
-document.getElementById('handicapForm').addEventListener('submit', function (e) {
-  e.preventDefault();
-
-  let scores = [];
+  // Generate 10 score inputs
   for (let i = 1; i <= 10; i++) {
-    const val = parseFloat(document.getElementById(`score${i}`).value);
-    if (!isNaN(val)) scores.push(val);
-  }
-
-  if (scores.length < 3) {
-    document.getElementById('handicapResult').innerHTML = `
-      <div class="alert alert-warning">Please enter at least 3 valid scores.</div>
+    const col = document.createElement('div');
+    col.className = "col-md-6 mb-3";
+    col.innerHTML = `
+      <label for="score${i}" class="form-label">Score ${i}</label>
+      <input type="number" class="form-control" id="score${i}" placeholder="Enter score ${i}">
     `;
-    return;
+    scoreInputs.appendChild(col);
   }
 
-  // Sort scores and calculate average of the 3 lowest
-  scores.sort((a, b) => a - b);
-  const bestThree = scores.slice(0, 3);
-  const avg = bestThree.reduce((sum, score) => sum + score, 0) / 3;
-  const handicap = (avg - 72).toFixed(1); // Assuming par 72
+  // Handle form submission
+  document.getElementById('handicapForm').addEventListener('submit', function (e) {
+    e.preventDefault();
 
-  document.getElementById('handicapResult').innerHTML = `
-    <div class="alert alert-success">Estimated Handicap: ${handicap}</div>
-  `;
-});
+    let scores = [];
+    for (let i = 1; i <= 10; i++) {
+      const val = parseFloat(document.getElementById(`score${i}`).value);
+      if (!isNaN(val)) scores.push(val);
+    }
+
+    if (scores.length < 3) {
+      document.getElementById('handicapResult').innerHTML = `
+        <div class="alert alert-warning">Please enter at least 3 valid scores.</div>
+      `;
+      return;
+    }
+
+    // Sort scores and calculate average of the 3 lowest
+    scores.sort((a, b) => a - b);
+    const bestThree = scores.slice(0, 3);
+    const avg = bestThree.reduce((sum, score) => sum + score, 0) / 3;
+    const handicap = (avg - 72).toFixed(1); // Assuming par 72
+
+    document.getElementById('handicapResult').innerHTML = `
+      <div class="alert alert-success">Estimated Handicap: ${handicap}</div>
+    `;
+  });
+
