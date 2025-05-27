@@ -63,16 +63,36 @@
   <div class="container">
 
     <!--JUMBO-->
-    <div data-aos="fade-up" class="bg-light p-5  m-3 text-bg-light">
+    <div data-aos="fade-up" class="bg-light p-5  m-3">
       <h1 class="display-4">Welcome to Fairway Fusion</h1>
-      <p class="lead">Your comprehensive golf companion. From precise shot calculations to real-time PGA leaderboards,
-        we merge technology with tradition to enhance your game. Whether you're a seasoned pro or just starting out,
-        Fairway Fusion is here to support every swing.</p>
+          <p class="lead">Your comprehensive golf companion. From precise shot calculations to real-time PGA
+            leaderboards,
+            we merge technology with tradition to enhance your game. Whether you're a seasoned pro or just starting out,
+            Fairway Fusion is here to support every swing.</p>
       <hr class="my-4">
     </div>
 
-    <!--Rankings and Calculator-->
-    <div class="row gy-6">
+    <!--rankings-->
+        <div class="row gy-4">
+          <div class="col-md-12">
+                <div data-aos="fade-up" class="card text-center">
+                  <div class="card-header">
+                    Featured
+                  </div>
+                  <div class="card-body">
+                    <p class="card-text">
+                      <iframe width="100%" height="750px" title="Top Rankings" src="https://www.owgr.com/sharing-widget?pageSize=15"
+                        frameborder="0" allowfullscreen="false"></iframe>
+                    </p>
+                  </div>
+                </div>
+          </div>
+        </div>
+      <br>
+
+
+    <!--Weather and Calculator-->
+    <div class="row gy-4">
       <div class="col-md-8">
         <!--World Rankings-->
         <div data-aos="fade-up" class="card text-center">
@@ -80,12 +100,15 @@
             Featured
           </div>
           <div class="card-body">
-            <p class="card-text"><iframe width="100%" height="580" title="Top Rankings"
-                src="https://www.owgr.com/sharing-widget?pageSize=15" frameborder="0" allowfullscreen="false"></iframe>
+            <p class="card-text">
+              <iframe width="100%" height="450"
+                src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=in&metricTemp=°F&metricWind=mph&zoom=5&overlay=wind&product=ecmwf&level=surface&lat=42.261&lon=-92.549&detailLat=45.123&detailLon=-92.537&marker=true&pressure=true&message=true"
+                frameborder="0"></iframe>
             </p>
           </div>
         </div>
       </div>
+      <br>
       <div class="col-md-4">
         <!--Cal-->
         <div class="">
@@ -159,20 +182,19 @@
     </div>
 
     <!--Handicap Cal-->
-    <div class="row">
-      <div class="card">
-        <div class="card-header bg-success text-white">
-          <h5 class="mb-0">Handicap Calculator</h5>
-        </div>
-        <div class="card-body">
-          <form id="handicapForm">
-            <div id="scoreInputs" class="row">
-              <!-- JavaScript will populate inputs here -->
-            </div>
-            <button type="submit" class="btn btn-success mt-3">Calculate Handicap</button>
-          </form>
-          <div id="handicapResult" class="mt-4"></div>
-        </div>
+
+    <div class="card">
+      <div class="card-header bg-success text-white">
+        <h5 class="mb-0">Handicap Calculator</h5>
+      </div>
+      <div class="card-body">
+        <form id="handicapForm">
+          <div id="scoreInputs" class="row">
+            <!-- JavaScript will populate inputs here -->
+          </div>
+          <button type="submit" class="btn btn-success mt-3">Calculate Handicap</button>
+        </form>
+        <div id="handicapResult" class="mt-4"></div>
       </div>
     </div>
     <br>
